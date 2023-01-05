@@ -40,8 +40,8 @@ class MainWindows(QWidget):
     def clear(self):
         self.li_todo.clear()
     
-    def double_clicked(self, item):
-        self.li_todo.clear(item)
+    def double_clicked(self):
+        self.li_todo.clear()
             
 
 
