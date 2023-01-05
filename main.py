@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QLineEdit, QPushButton, QWidget, QApplication, QListWidget, QVBoxLayout
-from PySide6.QtGui import QIcon
+#je pourrais faire from Pyside6 import Qtwidgets mais faut tout préfixer
 
 
 """ 3 Widgets :
@@ -12,24 +12,24 @@ class MainWindows(QWidget):
 
         self.setWindowTitle("Gabriel ToDo")
         self.resize(400, 400)
-        self.setWindowIcon(QIcon("oeb.ico"))
 
 
-        main_layout = QVBoxLayout(self)
+        self.main_layout = QVBoxLayout(self)
 
         self.li_todo = QListWidget()
         self.le_todo = QLineEdit()#entrer pour ajouter à la liste
-        self.btn_clear = QPushButton("Supprimer")#cliquer pour supprimer la liste
+        self.le_todo.setPlaceholderText("Tâche à effecuer")#text grisé
+        self.btn_clear = QPushButton("Tout Supprimer")#cliquer pour supprimer la liste
 
-        main_layout.addWidget(self.li_todo)
-        main_layout.addWidget(self.le_todo)
-        main_layout.addWidget(self.btn_clear)
+        self.main_layout.addWidget(self.li_todo)
+        self.main_layout.addWidget(self.le_todo)
+        self.main_layout.addWidget(self.btn_clear)
 
-        self.le_todo.returnPressed.connect(self.add)
+        self.le_todo.returnPressed.connect(self.add)#touche entrée press
 
-        self.btn_clear.clicked.connect(self.clear)
+        self.btn_clear.clicked.connect(self.li_todo.clear)
 
-        self.li_todo.itemDoubleClicked.connect(self.double_clicked)
+        self.li_todo.itemDoubleClicked.connect(self.delete_todo)
 
         
     def add(self):
@@ -37,11 +37,9 @@ class MainWindows(QWidget):
         self.li_todo.addItem(text)
         self.le_todo.clear()
 
-    def clear(self):
-        self.li_todo.clear()
     
-    def double_clicked(self):
-        self.li_todo.clear()
+    def delete_todo(self, item):
+        self.li_todo.takeItem(self.li_todo.row(item))
             
 
 
